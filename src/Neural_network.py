@@ -43,4 +43,4 @@ class Neural_network:
             raise ValueError("Error function not supported")
         
     def backpropagation(self, targets):
-        # ToDo
+        # TODO: Implement backpropagation
