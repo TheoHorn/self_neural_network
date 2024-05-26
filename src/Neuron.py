@@ -45,6 +45,7 @@ class Neuron :
         else:
             raise ValueError("Activation function not supported")
         
+    
     def set_inputs(self, inputs):
         self.inputs = inputs
     
