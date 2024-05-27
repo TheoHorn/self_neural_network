@@ -1,27 +1,5 @@
 import numpy as np
-
-class Activation_functions:
-    def identity(x):
-        return x
-
-    def sigmoid(x):
-        return 1/(1 + np.exp(-x))
-    
-    def relu(x):
-        return max(0, x)
-    
-    def tanh(x):
-        return np.tanh(x)
-    
-    def softmax(x):
-        return np.exp(x) / np.sum(np.exp(x), axis=0)
-    
-    def relu(x):
-        if x > 0:
-            return x
-        else:
-            return 0
-        
+from Activation_functions import Activation_functions
 
 class Neuron :
     def __init__(self) -> None:
