@@ -1,4 +1,25 @@
-# README - Simple Neural Network Implementation
+# [EN] README - Simple Neural Network Implementation
+
+## Introduction
+
+Welcome to this project for the implementation of simple neural networks in Python. The aim of this project is to model, train, and use basic neural networks from scratch, without the use of pre-existing machine learning libraries such as TensorFlow or PyTorch. It is designed for educational purposes to help understand the fundamental concepts of neural networks.
+
+## Prerequisites
+
+- Python 3.6 or higher
+- The following Python libraries: numpy, pandas, matplotlib
+
+## Example
+
+- Example\_Linear.py: example of a model operating on a linear problem (f(x) -> 2x)
+
+## Contact
+
+For any questions or suggestions, please do not hesitate to contact me at the following address: [theo.hornberger@gmail.com](mailto:theo.hornberger@gmail.com)
+
+
+
+# [FR] README - Simple Neural Network Implementation
 
 ## Introduction
 
