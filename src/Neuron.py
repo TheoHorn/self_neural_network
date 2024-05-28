@@ -3,6 +3,7 @@ from Activation_functions import Activation_functions
 
 class Neuron :
     def __init__(self) -> None:
+        self.num_inputs = 0
         self.inputs = []
         self.weights = []
         self.bias = 0
@@ -23,8 +24,12 @@ class Neuron :
         else:
             raise ValueError("Activation function not supported")
         
+    def set_num_inputs(self, num_inputs):
+        self.num_inputs = num_inputs
     
     def set_inputs(self, inputs):
+        if len(inputs) != self.num_inputs:
+            raise ValueError("Invalid number of inputs")
         self.inputs = inputs
     
     def set_weights(self, weights):
@@ -50,4 +55,10 @@ class Neuron :
         self.output = self.activation_function(self.output)
         return self.output
     
-    
+    def __str__(self) -> str:
+        string = "Neuron - " + str(self.num_inputs) + " inputs\n"
+        for i in range(len(self.inputs)):
+            string += "    in: " + str(self.inputs[i]) + ",w: " + str(self.weights[i]) + "\n"
+        string += "bias: " + str(self.bias) + "\n"
+        string += "output: " + str(self.output) + "\n"
+        return string

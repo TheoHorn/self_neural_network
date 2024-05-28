@@ -4,17 +4,24 @@ import numpy as np
 
 
 nw = Neural_network()
-nw.add_layer(Layer(4, 8,"relu"))
-nw.add_layer(Layer(2, 4,"relu"))
+nw.add_layer(Layer(2, 8,"relu"))
 nw.add_layer(Layer(1, 2,"softmax"))
+print(nw)
 
-inputs = np.random.rand(8) * 10
-target = [0]
-for i in range(8):
-    target += inputs[i]**i
-print("Inputs: ", inputs, "Target: ", target)
+inputs = []
+targets = []
+for i in range(100):
+    input = np.random.rand(8)
+    target = 0
+    for j in range(8):
+        target += input[j]**j
+    inputs.append(input)
+    targets.append([target])
 
-nw.train(inputs, target, learning_rate=0.1, error_function="mean_squared_error", max_epochs=1000, min_error=0.0001)
+inputs = np.array(inputs)
+targets = np.array(targets)
+
+nw.train(inputs, targets, learning_rate=0.1, error_function="mean_squared_error", max_epochs=10)
 
 test_input = [2, 3, 4, 5, 6, 7, 8, 9]
 true_result = 0

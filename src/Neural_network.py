@@ -6,6 +6,7 @@ from Error_functions import Error_functions
 class Neural_network:
     def __init__(self) -> None:
         self.layers = []
+        self.inputs = []
 
     def add_layer(self, layer):
         if type(layer) != Layer.Layer:
@@ -15,13 +16,15 @@ class Neural_network:
     def get_outputs(self):
         return self.layers[-1].get_outputs()
     
-    def set_inputs(self, inputs):
-        self.layers[0].set_inputs(inputs)
+    def set_first_inputs(self, inputs):
+        self.inputs = inputs
 
     def calculate_outputs(self, inputs):
-        self.set_inputs(inputs)
+        #self.set_first_inputs(inputs)
+        self.layers[0].calculate_outputs(self.inputs)
         for i in range(1, len(self.layers)):
             self.layers[i].calculate_outputs(self.layers[i-1].get_outputs())
+        
 
     def calculate_errors(self, targets, error_function):
         if error_function == "mean_squared_error":
@@ -50,13 +53,22 @@ class Neural_network:
                     else:
                         neuron.weights[k] -= learning_rate * np.sum([self.layers[i+1].neurons[l].weights[j] * self.layers[i+1].neurons[l].output for l in range(len(self.layers[i+1].neurons))]) * neuron.inputs[k]
 
-    def train(self, inputs, targets, learning_rate=0.1, error_function="mean_squared_error", max_epochs=1000, min_error=0.0001):
-        self.set_inputs(inputs)
-        self.gradient_descent(targets, learning_rate, error_function)
-        for _ in range(max_epochs):
-            self.gradient_descent(targets, learning_rate, error_function)
-            if self.calculate_errors(targets,error_function) < min_error:
+    def train(self, all_inputs, all_targets, learning_rate=0.1, error_function="mean_squared_error", max_epochs=1000, min_error=0.0001):
+        for epoch in range(max_epochs):
+            print("Epoch: ", epoch+1,"/",max_epochs)
+            error = 0
+            for i in range(len(all_inputs)):
+                self.train_batch(all_inputs[i], all_targets[i], learning_rate, error_function)
+                error += self.calculate_errors(all_targets[i], error_function)
+            error /= len(all_inputs)
+            print("Error: ", error)
+            print(self)
+            if error < min_error:
                 break
+    
+    def train_batch(self, inputs, targets, learning_rate, error_function):
+        self.set_first_inputs(inputs)
+        self.gradient_descent(targets, learning_rate, error_function)
         
     def predict(self, inputs):
         self.calculate_outputs(inputs)
@@ -82,3 +94,10 @@ class Neural_network:
                     layer.neurons[j].set_weights([float(x) for x in lines[i+1+j].split()])
                 self.add_layer(layer)
                 i += 3 + len(lines[i+1].split())
+
+    def __str__(self) -> str:
+        string = "Neural network\n"
+        string += "Inputs: " + str(self.inputs) + "\n"
+        for layer in self.layers:
+            string += str(layer)
+        return string
