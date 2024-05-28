@@ -1,7 +1,6 @@
+import numpy as np
 from Neural_network import Neural_network
 from Layer import Layer
-import numpy as np
-import pandas as pd
 
 inputs = np.array([
     [1],

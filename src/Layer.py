@@ -2,7 +2,7 @@ from Neuron import Neuron
 import numpy as np
 
 class Layer:
-    def __init__(self, num_neurons, num_inputs, activation_function="identity", bias=0):
+    def __init__(self, num_neurons, num_inputs, activation_function="linear", bias=0):
         self.neurons = [Neuron() for _ in range(num_neurons)]
         for neuron in self.neurons:
             neuron.set_num_inputs(num_inputs)
@@ -24,7 +24,6 @@ class Layer:
 
     def set_inputs(self, inputs):
         for neuron in self.neurons:
-            #print(self,inputs)
             neuron.set_inputs(inputs)
 
     def calculate_outputs(self, inputs):

@@ -1,7 +1,7 @@
 import numpy as np
 
-class Activation_functions:
-    def identity(x):
+class Activation_functions:    
+    def linear(x):
         return x
 
     def sigmoid(x):
@@ -18,7 +18,7 @@ class Activation_functions:
         exp_x = np.exp(x - np.max(x))
         return exp_x / np.sum(exp_x, axis=0)
 
-    def derivative_identity(x):
+    def derivative_linear(x):
         return 1
 
     def derivative_sigmoid(x):
@@ -51,8 +51,8 @@ class Activation_functions:
         return result
 
     def get_value_from_name(name):
-        if name == "identity":
-            return Activation_functions.identity
+        if name == "linear":
+            return Activation_functions.linear
         elif name == "sigmoid":
             return Activation_functions.sigmoid
         elif name == "relu":
@@ -65,8 +65,8 @@ class Activation_functions:
             raise ValueError("Activation function not supported")
         
     def get_derivative_value_from_name(name):
-        if name == "identity":
-            return Activation_functions.derivative_identity
+        if name == "linear":
+            return Activation_functions.derivative_linear
         elif name == "sigmoid":
             return Activation_functions.derivative_sigmoid
         elif name == "relu":
