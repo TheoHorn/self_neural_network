@@ -11,7 +11,7 @@ Bienvenue dans ce projet de mise en œuvre de réseaux de neurones simples en Py
 
 ## Exemple
 
-- Exemple_Linear.py : exemple de fonctionnement d'un modèle sur un porblème linéaire (f(x) -> 2x)
+- Exemple_Linear.py : exemple de fonctionnement d'un modèle sur un problème linéaire (f(x) -> 2x)
 
 ## Contact
 
