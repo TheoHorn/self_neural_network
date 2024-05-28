@@ -53,7 +53,7 @@ class Neural_network:
                     else:
                         neuron.weights[k] -= learning_rate * np.sum([self.layers[i+1].neurons[l].weights[j] * self.layers[i+1].neurons[l].output for l in range(len(self.layers[i+1].neurons))]) * neuron.inputs[k]
 
-    def train(self, all_inputs, all_targets, learning_rate=0.1, error_function="mean_squared_error", max_epochs=1000, min_error=0.0001):
+    def train(self, all_inputs, all_targets, learning_rate=0.00001, error_function="mean_squared_error", max_epochs=1000, min_error=0.0001):
         for epoch in range(max_epochs):
             print("Epoch: ", epoch+1,"/",max_epochs)
             error = 0
@@ -62,7 +62,6 @@ class Neural_network:
                 error += self.calculate_errors(all_targets[i], error_function)
             error /= len(all_inputs)
             print("Error: ", error)
-            print(self)
             if error < min_error:
                 break
     
