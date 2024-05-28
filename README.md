@@ -9,6 +9,10 @@ Bienvenue dans ce projet de mise en œuvre de réseaux de neurones simples en Py
 - Python 3.6 ou supérieur
 - Bibliothèques Python suivantes : numpy, pandas, matplotlib
 
+## Exemple
+
+- Exemple_Linear.py : exemple de fonctionnement d'un modèle sur un porblème linéaire (f(x) -> 2x)
+
 ## Contact
 
 Pour toute question ou suggestion, n'hésitez pas à me contacter à l'adresse suivante : [theo.hornberger@gmail.com](mailto:theo.hornberger@gmail.com)
