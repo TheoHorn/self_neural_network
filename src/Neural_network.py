@@ -10,6 +10,8 @@ class Neural_network:
     def __init__(self) -> None:
         self.layers = []
         self.inputs = []
+        self.early_stopping = False
+        self.early_stopping_min_delta = 0.0001
 
     def add_layer(self, layer):
         if type(layer) != Layer.Layer:
@@ -39,19 +41,46 @@ class Neural_network:
         else:
             raise ValueError("Error function not supported")       
     
-    def train(self, all_inputs, all_targets, learning_rate=0.00001, error_function="mean_squared_error", max_epochs=1000, min_error=0.0001):
+    def verify_early_stopping(self, error, min_error):
+        if self.early_stopping and abs(error - min_error) < self.early_stopping_min_delta:
+            return True
+        return False        
+    
+    def set_early_stopping(self, early_stopping=True, threshold=0.0001):
+        self.early_stopping = early_stopping
+        self.early_stopping_threshold = threshold
+
+    def train(self, all_inputs, all_targets, learning_rate=0.00001, error_function="mean_squared_error", max_epochs=1000, min_error=0.0001, batch_size=1):
+        minimal_error_measured = 2000000000
         for epoch in range(max_epochs):
-            print("Epoch: ", epoch+1,"/",max_epochs)
+            print("Epoch: ", epoch+1,"/",max_epochs, "-", "W.Update/Epoch : ", len(all_inputs)/batch_size)
             error = 0
-            for i in range(len(all_inputs)):
-                self.gradient_descent(all_inputs[i], all_targets[i], learning_rate, error_function)
-                error += self.calculate_errors(all_targets[i], error_function)
+            for i in range(0, len(all_inputs), batch_size):
+                batch_inputs = all_inputs[i:i+batch_size]
+                batch_targets = all_targets[i:i+batch_size]
+                output_errors = []
+                for j in range(len(batch_inputs)):
+                    output_errors.append(self.gradient_descent(batch_inputs[j], batch_targets[j], learning_rate, error_function))
+                output_errors = np.mean(output_errors, axis=0)
+                self.update_weights(learning_rate, output_errors)
+                error += np.mean(self.calculate_errors(batch_targets, error_function))
+                
             error /= len(all_inputs)
-            print("Error: ", error)
+            #print("    Loss: ", error)
+            print("    Loss: ", error, " - Minimal Loss: ", minimal_error_measured)
+            if self.verify_early_stopping(error, minimal_error_measured):
+                print("    Early stopping")
+                break
+            else:
+                if error < minimal_error_measured:
+                    minimal_error_measured = error
             if error < min_error:
                 break
     
     def gradient_descent(self, inputs, targets, learning_rate, error_function="mean_squared_error"):
+        """
+        This function implements the gradient descent algorithm to update the weights and biases of the network.
+        """
         # Forward pass
         self.calculate_outputs(inputs)
 
@@ -76,8 +105,9 @@ class Neural_network:
                 neuron.bias -= delta_bias
 
             output_errors = layer_errors * neuron.activation_function_derivative(neuron.get_output())
+        return output_errors
 
-        # Update output layer biases and weights
+    def update_weights(self, learning_rate, output_errors):
         for j in range(len(self.layers[-1].neurons)):
             neuron = self.layers[-1].neurons[j]
             delta_weights = np.zeros(len(neuron.weights))
@@ -92,7 +122,6 @@ class Neural_network:
 
             neuron.weights -= delta_weights
             neuron.bias -= delta_bias
-
 
     def predict(self, all_inputs):
         outputs = []
