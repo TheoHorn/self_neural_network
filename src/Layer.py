@@ -2,6 +2,10 @@ from Neuron import Neuron
 import numpy as np
 
 class Layer:
+    """
+    This class represents a layer of neurons in the network.
+    """
+
     def __init__(self, num_neurons, num_inputs, activation_function="linear", bias=0):
         self.neurons = [Neuron() for _ in range(num_neurons)]
         for neuron in self.neurons:

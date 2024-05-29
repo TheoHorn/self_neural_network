@@ -1,6 +1,9 @@
 from Activation_functions import Activation_functions
 
 class Neuron:
+    """
+    This class represents a neuron in the network.
+    """
     def __init__(self):
         self.num_inputs = 0
         self.inputs = []

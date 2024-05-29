@@ -1,6 +1,10 @@
 import numpy as np
 
 class Activation_functions:    
+    """
+    This class contains the activation functions that can be used in the network.
+    """
+
     def linear(x):
         return x
 

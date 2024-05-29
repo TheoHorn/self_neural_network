@@ -3,6 +3,10 @@ import Layer
 from Error_functions import Error_functions
 
 class Neural_network:
+    """
+    This class represents a neural network that can be used for classification and regression tasks.
+    """
+
     def __init__(self) -> None:
         self.layers = []
         self.inputs = []

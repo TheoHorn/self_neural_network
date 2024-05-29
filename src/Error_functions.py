@@ -1,6 +1,10 @@
 import numpy as np
 
 class Error_functions:
+    """
+    This class contains the error functions that can be used to calculate the error between the output of the network and the target values.
+    """
+
     def quadratic_error(outputs, targets):
         return 0.5 * np.sum(np.square(outputs - targets))
 
